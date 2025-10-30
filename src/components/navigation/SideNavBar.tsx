@@ -38,7 +38,7 @@ export default function SideNavBar(props: Props) {
                         style={{
                             ...styles.appName,
                             backgroundColor: isHovered === 'messages' ? colors.surface : colors.background,
-                            border: isHovered === 'messages' ? `2px solid ${colors.primaryLight}` : `2px solid ${colors.background}`,
+                            border: isHovered === 'messages' ? `3px solid ${colors.primaryLight}` : `3px solid ${colors.background}`,
                         }}
                         onMouseEnter={() => setIsHovered('messages')}
                         onMouseLeave={() => setIsHovered(null)}
@@ -55,7 +55,7 @@ export default function SideNavBar(props: Props) {
                          style={{
                             ...styles.appName,
                             backgroundColor: isHovered === 'matches' ? colors.surface : colors.background,
-                            border: isHovered === 'matches' ? `2px solid ${colors.primaryLight}` : `2px solid ${colors.background}`,
+                            border: isHovered === 'matches' ? `3px solid ${colors.primaryLight}` : `3px solid ${colors.background}`,
                         }}
                         onMouseEnter={() => setIsHovered('matches')}
                         onMouseLeave={() => setIsHovered(null)}
@@ -67,12 +67,12 @@ export default function SideNavBar(props: Props) {
                             Matches
                         </Text>
                     </Link>
-                    {/* <Link
+                    <Link
                         to={'/likes'}
                         style={{
                             ...styles.appName,
                             backgroundColor: isHovered === 'likes' ? colors.surface : colors.background,
-                            border: isHovered === 'likes' ? `2px solid ${colors.primaryLight}` : `2px solid ${colors.background}`,
+                            border: isHovered === 'likes' ? `3px solid ${colors.primaryLight}` : `3px solid ${colors.background}`,
                         }}
                         onMouseEnter={() => setIsHovered('likes')}
                         onMouseLeave={() => setIsHovered(null)}
@@ -83,16 +83,16 @@ export default function SideNavBar(props: Props) {
                         >
                             Likes
                         </Text>
-                    </Link> */}
+                    </Link>
                 </div>              
             </Container>
             <div style={styles.footer}>
                 <Link
-                    to={'/profile'}
+                    to={'/account'}
                     style={{
                         ...styles.link,
                         backgroundColor: isHovered === 'profile' ? colors.surface : colors.background,
-                        border: isHovered === 'profile' ? `2px solid ${colors.primaryLight}` : `2px solid ${colors.surface}`,
+                        border: isHovered === 'profile' ? `3px solid ${colors.primaryLight}` : `3px solid ${colors.surface}`,
                     }}
                     onMouseEnter={() => setIsHovered('profile')}
                     onMouseLeave={() => setIsHovered(null)}

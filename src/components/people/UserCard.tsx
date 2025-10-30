@@ -4,6 +4,7 @@ import colors from "../../constants/colors";
 import Container from "../commons/Container";
 import Text from "../commons/Text";
 import Button from "../commons/Button";
+import { Link } from "react-router-dom";
 
 type Props = {
     style?: React.CSSProperties,
@@ -26,23 +27,30 @@ export default function UserCard(props: Props) {
             <div
             style={{
                 ...styles.body,
-                backgroundImage: `url(${props.person?.profilePhoto})`
+                backgroundImage: `url(${props.person?.profilePhoto})`,
             }}
             >
-                <Container style={styles.info}>  
-                    <Text
-                        variant='heading'
-                        style={styles.name}
-                    >
-                        {firstName}, {props.person?.age}
-                    </Text>
-                    <Text
-                        variant='subtitle'
-                        style={styles.bio}
-                    >
-                        {props.person?.bio || 'No bio'}  
-                    </Text>
-                </Container>
+                <div style={{ cursor: 'pointer' }}>
+                    <Link
+                            to={`/discover/profile/${props.person?._id}`}
+                            style={styles.profileLink}
+                        >
+                        <Container style={styles.info}>
+                            <Text
+                                variant='heading'
+                                style={styles.name}
+                            >
+                                {firstName}, {props.person?.age}
+                            </Text>
+                            <Text
+                                variant='subtitle'
+                                style={styles.bio}
+                            >
+                                {props.person?.bio || 'No bio yet.'}  
+                            </Text>
+                        </Container>
+                    </Link>
+                </div>
             </div>
         </div>
     )
@@ -72,6 +80,10 @@ const styles: {[key: string]: React.CSSProperties} = {
         height: '50vh',
         objectFit: 'cover',
         borderRadius: '8px',
+    },
+    profileLink: {
+        textDecoration: 'none',
+        color: colors.textPrimary,
     },
     info: {
         padding: '20px 20px',

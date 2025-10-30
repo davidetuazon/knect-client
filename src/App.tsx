@@ -15,20 +15,23 @@ import { Toaster } from 'react-hot-toast';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
-import Profile from './pages/Profile';
+import Account from './pages/Account';
 import Messages from './pages/Messages';
 import Matches from './pages/Matches';
+import Likes from './pages/Likes';
+import Profile from './pages/Profile';
 
 function App() {
   return (
     <BrowserRouter>
       <Toaster
       toastOptions={{
-        success: {duration: 500},
+        success: {duration: 1250},
         error: {duration: 4000},
         style: {
-          background: '#E5E7EB',
-          fontFamily: 'Poppins-Light',
+          background: '#FFFFFF',
+          fontFamily: 'Poppins-SemiBold',
+          color: '#1F2937',
           width: 'fit-content',
           maxWidth: '500px',
           whiteSpace: 'pre-wrap'
@@ -49,10 +52,18 @@ function App() {
             }
           />
           <Route 
-            path='/profile'
+            path='/discover/profile/:id'
             element={
               <RequireAuth>
                 <Profile />
+              </RequireAuth>
+            }
+          />
+          <Route 
+            path='/account'
+            element={
+              <RequireAuth>
+                <Account />
               </RequireAuth>
             }
           />
@@ -69,6 +80,14 @@ function App() {
             element={
               <RequireAuth>
                 <Matches />
+              </RequireAuth>
+            }
+          />
+          <Route 
+            path='/likes'
+            element={
+              <RequireAuth>
+                <Likes />
               </RequireAuth>
             }
           />

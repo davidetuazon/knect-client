@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getConversations } from "../services/api";
 import colors from "../constants/colors";
 
 import SideNavBar from "../components/navigation/SideNavBar";
@@ -10,21 +9,7 @@ type Props = {
     style?: React.CSSProperties,
 }
 
-export default function Messages(props: Props) {
-    const [messages, setMessages] = useState<any[]>();
-
-    const init = async () => {
-        try {
-            const msg = await getConversations();
-            setMessages(msg.docs);
-        } catch (e) {
-            console.error('Failed API call: ', e)
-        }
-    }
-
-    useEffect(() => {
-        init();
-    }, []);
+export default function Likes(props: Props) {
 
     return (
         <div style={styles.root}>
@@ -33,24 +18,12 @@ export default function Messages(props: Props) {
                     <SideNavBar />
                 </div>
                 <div style={styles.maincard}>
-                    <Container style={styles.messagesCard}>
-                        {messages?.length === 0 ? (
-                            <Text
-                                variant="heading"
-                            >
-                                No messages yet.
-                            </Text>
-                        ) : (
-                            messages?.map((msg) => (
-                                <div key={msg._id}>
-                                    <Text
-                                        variant="heading"
-                                    >
-                                        Messaging/Chating is unlocked after a match is made.
-                                    </Text>
-                                </div>
-                            ))
-                        )}
+                    <Container style={styles.matchesCard}>
+                        <Text
+                            variant="heading"
+                        >
+                            People who recently sent you a like will appear here.
+                        </Text>
                     </Container>
                 </div>
             </div>
@@ -92,7 +65,7 @@ const styles: {[key: string]: React.CSSProperties} = {
         justifyContent: 'center',
         alignItems: 'center',
     },
-    messagesCard: {
+    matchesCard: {
         width: '80%',
         height: '80%',
     },

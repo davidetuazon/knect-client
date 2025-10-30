@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import colors from "../constants/colors";
 import { discover, like, skip } from '../services/api';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { toast } from "react-hot-toast";
 
 import SideNavBar from "../components/navigation/SideNavBar";
 import UserCard from "../components/people/UserCard";
 import Container from "../components/commons/Container";
+import Instructions from "../components/people/Instructions";
 
 export default function Home() {
     const [people, setPeople] = useState<any[]>([]);
@@ -13,13 +15,13 @@ export default function Home() {
     const [cursor, setCursor] = useState<string | null>(null);
 
     const x = useMotionValue(0);
-    const opacity = useTransform(x, [-250, 0, 250], [0.2, 1, 0.2]);
-    const rotate = useTransform(x, [-250, 250], [-15, 15]);
+    const opacity = useTransform(x, [-250, 0, 250], [0.4, 1, 0.4]);
+    const rotate = useTransform(x, [-250, 250], [-18, 18]);
 
     const handleDragEnd = () => {
         const xValue = x.get();
     
-        if (Math.abs(xValue) > 50) {
+        if (Math.abs(xValue) > 125) {
             const dir = xValue > 0 ? 'right' : 'left';
             handleSwipe(dir, people[currIdx]);
         }
@@ -42,15 +44,36 @@ export default function Home() {
                 const result = await like(person._id);
                 
                 if (result.matched) {
-                    console.log(`You've matched with ${person.fullName}! Conversation id: ${result.conversationId}`);
+                    toast.success(
+                        `It's a match with ${person.fullName}!`, {
+                            duration: 1250,
+                            style: {
+                                backgroundColor: colors.primary,
+                                color: colors.background,
+                            },
+                    });
                 } else {
-                    console.log(`You've sent a like to ${person.fullName}. UserId: ${person._id}`);
+                    toast( `You've sent a like to ${person.fullName}.`, {
+                        duration: 1000,
+                        style: {
+                                backgroundColor: colors.secondary,
+                                color: colors.background,
+                            },
+                    });
+                    
                 }
             } else {
                 await skip(person._id);
-                console.log(`You've skipped on ${person.fullName}. UserId: ${person._id}`);
+                toast( `You've skipped on ${person.fullName}.`, {
+                    duration: 1000,
+                    style: {
+                            backgroundColor: colors.accent,
+                            color: colors.background,
+                        },
+                });
             }
         } catch (e) {
+            toast.error('Failed to perform action. Please try again.');
             console.error('Failed API call: ', e);
         } finally {
             setCurrIdx(prev => prev + 1);
@@ -61,7 +84,6 @@ export default function Home() {
     const person = people[currIdx];
 
     useEffect(() => {
-        console.log('Mounted');
         init();
     }, []);
 
@@ -93,13 +115,11 @@ export default function Home() {
                         onDragEnd={handleDragEnd}
                         onMouseDown={() => setCursor('grabbing')}
                         onMouseUp={() => setCursor(null)}
+                        onMouseLeave={() => setCursor(null)}
                     >
                         <UserCard person={person} />
                     </motion.div>
-
-                    <Container style={styles.instructions}>
-                        TODO: instructions + icons here
-                    </Container>
+                    <Instructions />
                 </div>
             </div>
         </div>
@@ -114,7 +134,7 @@ const styles: {[key: string]: React.CSSProperties} = {
         height: '100%',
         width: '100%',
         alignItems: 'center',
-        overflow: 'auto',
+        overflow: 'hidden',
     },
     body: {
         // border: '1px solid red',
