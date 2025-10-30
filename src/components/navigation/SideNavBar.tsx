@@ -67,7 +67,7 @@ export default function SideNavBar(props: Props) {
                             Matches
                         </Text>
                     </Link>
-                    <Link
+                    {/* <Link
                         to={'/likes'}
                         style={{
                             ...styles.appName,
@@ -83,7 +83,7 @@ export default function SideNavBar(props: Props) {
                         >
                             Likes
                         </Text>
-                    </Link>
+                    </Link> */}
                 </div>              
             </Container>
             <div style={styles.footer}>

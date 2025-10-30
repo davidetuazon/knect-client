@@ -16,6 +16,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
+import Messages from './pages/Messages';
+import Matches from './pages/Matches';
 
 function App() {
   return (
@@ -51,6 +53,22 @@ function App() {
             element={
               <RequireAuth>
                 <Profile />
+              </RequireAuth>
+            }
+          />
+          <Route 
+            path='/messages'
+            element={
+              <RequireAuth>
+                <Messages />
+              </RequireAuth>
+            }
+          />
+          <Route 
+            path='/matches'
+            element={
+              <RequireAuth>
+                <Matches />
               </RequireAuth>
             }
           />

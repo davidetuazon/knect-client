@@ -31,7 +31,7 @@ export const login = async (email: string, password: string) => {
         const res = await api.post('/user/login', { email, password }, {});
         return res.data;
     } catch (e) {
-        throw new Error("Login failed");
+        throw new Error('Login failed');
     }
 }
 
@@ -48,7 +48,7 @@ export const register = async (params: {
         if (e.response?.data?.error) {
             throw new Error(e.response.data.error);
         }
-        throw new Error("Registration failed");
+        throw new Error('Registration failed');
     }
 }
 
@@ -58,5 +58,32 @@ export const discover = async () => {
         return res.data;
     } catch (e) {
         throw new Error('Failed to fetch potential matches');
+    }
+}
+
+export const like = async (id: string) => {
+    try {
+        const res = await api.post('/discover/like', { likedUserId: id });
+        return res.data;
+    } catch (e) {
+        throw new Error('Failed to send like invitation');
+    }
+}
+
+export const skip = async (id: string) => {
+    try {
+        const res = await api.post('discover/skip', { skippedUserId: id });
+        return res.data;
+    } catch (e) {
+        throw new Error('Failed to skip user')
+    }
+}
+
+export const getAllMessage = async () => {
+    try {
+        const res = await api.get('/messages');
+        return res.data;
+    } catch (e) {
+        throw new Error('Failed to fetch messages');
     }
 }

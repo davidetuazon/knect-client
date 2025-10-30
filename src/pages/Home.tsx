@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import colors from "../constants/colors";
-import { discover } from '../services/api';
+import { discover, like, skip } from '../services/api';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 
 import SideNavBar from "../components/navigation/SideNavBar";
@@ -17,8 +17,11 @@ export default function Home() {
     const rotate = useTransform(x, [-250, 250], [-15, 15]);
 
     const handleDragEnd = () => {
-        if (Math.abs(x.get()) > 50) {
-            setCurrIdx(prev => prev + 1);
+        const xValue = x.get();
+    
+        if (Math.abs(xValue) > 50) {
+            const dir = xValue > 0 ? 'right' : 'left';
+            handleSwipe(dir, people[currIdx]);
         }
     }
 
@@ -31,9 +34,27 @@ export default function Home() {
         }
     }
 
-    const handleSwipe = (dir: "left" | "right", person: any) => {
-        if (dir === "right") console.log("Liked:", person.fullName);
-        else console.log("Skipped:", person.fullName);
+    const handleSwipe = async (dir: "left" | "right", person: any) => {
+        if (!person) return;
+        
+        try {
+            if (dir === 'right') {
+                const result = await like(person._id);
+                
+                if (result.matched) {
+                    console.log(`You've matched with ${person.fullName}! Conversation id: ${result.conversationId}`);
+                } else {
+                    console.log(`You've sent a like to ${person.fullName}. UserId: ${person._id}`);
+                }
+            } else {
+                await skip(person._id);
+                console.log(`You've skipped on ${person.fullName}. UserId: ${person._id}`);
+            }
+        } catch (e) {
+            console.error('Failed API call: ', e);
+        } finally {
+            setCurrIdx(prev => prev + 1);
+        }
     };
 
     
