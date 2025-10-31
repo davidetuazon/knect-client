@@ -30,6 +30,7 @@ export default function AuthProvider(props: Props) {
         try {
             const res = await me();
             setUser(res);
+            
             ConnectSocket(token);
         } catch (e) {
             setUser(null);

@@ -11,7 +11,7 @@ let socket: Socket | null = null;
 export const ConnectSocket = (token: string) => {
     if (!token) {
         console.warn('Socket connection skipped: No token provided');
-        return socket as Socket;
+        return null;
     }
 
     if (!socket || !socket.connected) {
