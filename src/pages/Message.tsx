@@ -96,7 +96,7 @@ export default function Message(props: Props) {
                                     color: colors.darkBorder,
                                 }}
                             >
-                            Please be reminded to always be respectful in the chat
+                            Please remember to always be respectful in the chat.
                             </Text>
                         </div>
                         <div style={styles.chatInputs}>
