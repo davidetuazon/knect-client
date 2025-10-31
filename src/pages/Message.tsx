@@ -29,7 +29,6 @@ export default function Message(props: Props) {
 
         try {
             const results = await getMessages(conversationId);
-            console.log(results.docs);
             setMessages(results.docs);
         } catch (e) {
             console.error('Failed API call: ', e)
@@ -47,7 +46,7 @@ export default function Message(props: Props) {
         socket.emit('joinRoom', { conversationId });
 
         const handleNewMessage = (msg: any) => {
-            setMessages(prev => [msg, ...prev]);
+            setMessages(prev => [...prev, msg]);
         };
 
         socket.on('newMessage', handleNewMessage);
@@ -62,6 +61,7 @@ export default function Message(props: Props) {
             chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
         }
     }, [messages]);
+
 
     const sendMessage = () => {
         console.log('SendMessage triggered');
@@ -155,9 +155,9 @@ export default function Message(props: Props) {
                                 ...styles.chatbox
                             }} 
                         >
-                            {messages.map((m, i) => (
+                            {messages.map((m) => (
                                 <div
-                                    key={i}
+                                    key={m._id}
                                     style={{
                                         ...styles.messageWrapper,
                                         justifyContent: m.senderId === user?._id ? 'flex-end' : 'flex-start',
