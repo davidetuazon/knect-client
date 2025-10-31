@@ -24,6 +24,7 @@ export default function AuthProvider(props: Props) {
     const init = async () => {
         try {
             const res = await me();
+            console.log(res);
             setUser(res);
         } catch (e) {
             setUser(null);

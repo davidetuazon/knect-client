@@ -104,5 +104,7 @@ const styles: {[key: string]: React.CSSProperties} = {
     messagesCard: {
         width: '80%',
         height: '80%',
+        display: 'flex',
+        overflowY: 'auto',
     },
 }

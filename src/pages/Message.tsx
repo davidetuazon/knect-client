@@ -12,41 +12,6 @@ type Props = {
 }
 
 export default function Message(props: Props) {
-    const [messages, setMessages] = useState<any[]>();
-
-    const init = async () => {
-        try {
-            const msg = await getConversations();
-            setMessages(msg.docs);
-        } catch (e) {
-            console.error('Failed API call: ', e)
-        }
-    }
-
-    useEffect(() => {
-        init();
-    }, []);
-
-    if (messages?.length === 0) {
-        return (
-            <div style={styles.root}>
-                <div style={styles.body}>
-                    <div style={styles.sidebar}>
-                        <SideNavBar />
-                    </div>
-                    <div style={styles.maincard}>
-                        <Container style={styles.messagesCard}>
-                            <Text
-                                variant="heading"
-                            >
-                                Working on it...
-                            </Text>
-                        </Container>
-                    </div>
-                </div>
-            </div>
-        )
-    }
 
     return (
         <div style={styles.root}>
@@ -56,11 +21,11 @@ export default function Message(props: Props) {
                 </div>
                 <div style={styles.maincard}>
                     <Container style={styles.messagesCard}>
-                        {messages?.map((msg) => (
-                            <div key={msg._id}>
-                                <ConversationCard conversation={msg} />
-                            </div>
-                        ))}
+                        <Text
+                            variant="heading"
+                        >
+                            Working on it...
+                        </Text>
                     </Container>
                 </div>
             </div>

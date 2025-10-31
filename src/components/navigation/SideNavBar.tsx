@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import colors from "../../constants/colors";
 import profile from '../../assets/icons/profile.svg';
+import Cookies from "js-cookie";
+import { useAuth } from "../../providers/AuthProvider";
 
 import Container from "../commons/Container";
 import Text from "../commons/Text";
+import { ACCESS_TOKEN } from "../../utils/constants";
 
 type Props = {
     style?: React.CSSProperties,
@@ -13,6 +16,8 @@ type Props = {
 type PageOptions = 'messages' | 'matches' | 'likes' | 'default';
 
 export default function SideNavBar(props: Props) {
+    const { setUser } = useAuth();
+    const navigate = useNavigate();
     const [isHovered, setIsHovered] = useState<string | null>(null);
 
     const location = useLocation();
@@ -23,6 +28,12 @@ export default function SideNavBar(props: Props) {
         return 'default';
     }
     const [isActive, setIsActive] = useState<PageOptions>(getActivePage());
+
+    const handleLogout = () => {
+        Cookies.remove(ACCESS_TOKEN);
+        setUser(null);
+        navigate('/');
+    }
 
     return (
         <div style={styles.sidebar}>
@@ -108,9 +119,26 @@ export default function SideNavBar(props: Props) {
                 >
                     <img
                         src={profile}
+                        alt="profile-svg"
                         style={styles.avatar}
                     />
                 </Link>
+                <div
+                    style={{
+                        ...styles.logout,
+                        backgroundColor: isHovered === 'logout' ? colors.surface : colors.background,
+                    }}
+                    onMouseEnter={() => setIsHovered('logout')}
+                    onMouseLeave={() => setIsHovered(null)}
+                    onClick={() => handleLogout()}
+                >
+                    <Text 
+                        variant="caption"
+                        style={{ margin: 0 }}
+                    >
+                        Sign out
+                    </Text>
+                </div>
             </div>
         </div>
     )
@@ -167,11 +195,12 @@ const styles: {[key: string]: React.CSSProperties} = {
         gap: 10,
     },
     footer: {
+        // border: '1px solid red',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'end',
-        padding: '0px 10px',
+        justifyContent: 'space-between',
+        padding: '5px 10px',
         height: '10%',
     },
     link: {
@@ -182,8 +211,14 @@ const styles: {[key: string]: React.CSSProperties} = {
         padding: '2%',
     },
      avatar: {
-       objectFit: 'contain',
-       width: '100%',
-       height: '100%',
+        objectFit: 'contain',
+        width: '100%',
+        height: '100%',
+    },
+    logout: {
+        border: `3px solid ${colors.accent}`,
+        borderRadius: '12px',
+        padding: '5px 15px',
+        cursor: 'pointer',
     },
 }
