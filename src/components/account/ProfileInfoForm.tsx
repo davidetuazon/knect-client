@@ -44,7 +44,6 @@ export default function ProfileInfoForm({ user, setUser, style }: Props) {
         
         try {
             const result = await updateProfile(payload);
-            console.log(result.user);
             setUser(result.user);
             reset();
             toast.success('Profile updated');

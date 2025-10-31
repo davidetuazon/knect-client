@@ -4,9 +4,6 @@ import { discover, like, me, skip } from '../services/api';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { toast } from "react-hot-toast";
 import { useAuth } from "../providers/AuthProvider";
-import Cookies from "js-cookie";
-import { ACCESS_TOKEN } from "../utils/constants";
-import { ConnectSocket } from "../services/socket";
 
 import SideNavBar from "../components/navigation/SideNavBar";
 import UserCard from "../components/people/UserCard";

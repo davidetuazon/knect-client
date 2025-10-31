@@ -64,9 +64,7 @@ export default function Message(props: Props) {
 
 
     const sendMessage = () => {
-        console.log('SendMessage triggered');
         const socket = getSocket();
-        console.log('Socket: ', socket);
         if (!socket || !text.trim()) return;
 
         socket.emit('message', { conversationId, message: text });
