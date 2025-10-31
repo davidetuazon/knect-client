@@ -2,7 +2,7 @@ import axios from "axios";
 import { ACCESS_TOKEN } from "../utils/constants";
 import Cookies from 'js-cookie';
 
-const BASE_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
+const BASE_URL = import.meta.env.VITE_APP_URL ?? "http://localhost:5000";
 const BASE_PATH = `${BASE_URL}/api/v1`;
 
 const api = axios.create({
@@ -140,5 +140,14 @@ export const getLikerList = async () => {
         return res.data;
     } catch(e) {
         throw new Error('Failed to fetch liker list');
+    }
+}
+
+export const getMessages = async (id: string) => {
+    try {
+        const res = await api.get(`/messages/${id}`)
+        return res.data;
+    } catch (e) {
+        throw new Error('Failed to fetch messages');
     }
 }

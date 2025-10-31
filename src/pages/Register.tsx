@@ -35,14 +35,18 @@ export default function Register() {
             email: data.email,
             password: data.password
         }
+        
+        const loadingToast = toast.loading("Waiting for registration to finish...")
         try {
             await registerUser(payload);
+            toast.dismiss(loadingToast);
             toast.success("Registration successful!");
             reset();
             setTimeout(() => {
                 navigate('/login');
-            }, 800);
+            }, 400);
         } catch (e: any) {
+            toast.dismiss(loadingToast);
             if (e.field && e.message) {
                 setError(e.field as keyof Inputs, { type: 'server', message: e.message })
             } else {

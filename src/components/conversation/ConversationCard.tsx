@@ -4,6 +4,7 @@ import profileIcon from '../../assets/icons/profile.svg';
 import { Link } from "react-router-dom";
 
 import Text from "../commons/Text";
+import typography from "../../constants/typography";
 
 type Props = {
     style?: React.CSSProperties,
@@ -13,16 +14,17 @@ type Props = {
 export default function ConversationCard(props: Props) {
     const [isHovered, setIsHovered] = useState<string | null>(null);
     const participant = props?.conversation.participants[0];
+    const timeStamp = props?.conversation.lastTimeStamp.split('T')[0];
 
     return (
         <Link
-            to={`/messages/${participant._id}`}
+            to={`/messages/${props.conversation._id}`}
             style={{ textDecoration: 'none', color: colors.textPrimary }}
         >
             <div 
                 style={{
                     ...Object.assign({}, styles.container, props.style),
-                    border: isHovered === props?.conversation._id ? `3px solid ${colors.background}` : `3px solid ${colors.surface}`,
+                    border: isHovered === props?.conversation._id ? `3px solid ${colors.border}` : `3px solid ${colors.background}`,
                 }}
                 onMouseEnter={() => setIsHovered(props?.conversation._id)}
                 onMouseLeave={() => setIsHovered(null)}
@@ -40,10 +42,18 @@ export default function ConversationCard(props: Props) {
                     style={styles.text}
                 >
                     <Text variant="heading">
-                        {participant.fullName}
+                        {participant.fullName}&nbsp;
+                        &nbsp;<span
+                            style={{
+                                color: colors.textSecondary,
+                                fontSize: typography.subtitle,
+                            }}
+                        >
+                            {timeStamp}
+                        </span>
                     </Text>
-                    <Text variant="title" style={{ color: colors.textSecondary }}>
-                        {props.conversation.lastMessage || 'Start you conversation'}
+                    <Text variant="heading" style={{ color: colors.textSecondary }}>
+                        {props.conversation.lastMessage || 'Start you connection...'}
                     </Text>
                 </div>
             </div>

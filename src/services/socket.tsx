@@ -1,27 +1,52 @@
 import { io, Socket } from "socket.io-client";
 
 const SOCKET_URL =
-  process.env.NODE_ENV === 'production'
-    ? "https://your-production-domain.com"
-    : 'http://localhost:5000';
+  import.meta.env.VITE_APP_URL ||
+  (process.env.NODE_ENV === 'production'
+    ? window.location.origin
+    : 'http://localhost:5000');
 
 let socket: Socket | null = null;
 
 export const ConnectSocket = (token: string) => {
-    if (!socket) {
+    if (!token) {
+        console.warn('Socket connection skipped: No token provided');
+        return socket as Socket;
+    }
+
+    if (!socket || !socket.connected) {
         socket = io(SOCKET_URL, {
             path: '/socket.io',
             transports: ['websocket', 'polling'],
             auth: { token },
+            reconnection: true,
+            reconnectionAttempts: 10,
+            reconnectionDelay: 2000,
+            reconnectionDelayMax: 5000,
         });
+
+        socket.on('connect', () => {
+            console.log('Socket connected');
+        })
+
+        socket.on('disconnect', (reason) => {
+            console.log('Socket disconnected: ', reason);
+        })
+
+        socket.on('connect_error', (e) => {
+            console.log('Socket connection error: ', e.message);
+        })
     }
+
     return socket;
 }
 
-export const getSocket = () => socket;
-export const disconnectSocket = () => {
+export const getSocket = (): Socket | null => socket;
+
+export const disconnectSocket = (): void => {
     if (socket) {
         socket.disconnect();
+        console.log('Socket disconnected manually');
         socket = null;
     }
-}
+};

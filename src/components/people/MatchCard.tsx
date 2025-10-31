@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import colors from "../../constants/colors";
 import profileIcon from '../../assets/icons/profile.svg';
 import { Link } from "react-router-dom";
@@ -16,13 +16,13 @@ export default function MatchCard(props: Props) {
 
     return (
         <Link
-                to={`/messages/${props.matches._id}`}
+                to={`/discover/profile/${props.matches._id}`}
                 style={{ textDecoration: 'none', color: colors.textPrimary }}
         >
             <div 
                 style={{
                     ...Object.assign({}, styles.container, props.style),
-                    border: isHovered === props?.matches._id ? `3px solid ${colors.background}` : `3px solid ${colors.surface}`,
+                    border: isHovered === props?.matches._id ? `3px solid ${colors.border}` : `3px solid ${colors.background}`,
                 }}
                 onMouseEnter={() => setIsHovered(props?.matches._id)}
                 onMouseLeave={() => setIsHovered(null)}

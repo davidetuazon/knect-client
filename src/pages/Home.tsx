@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import colors from "../constants/colors";
-import { discover, like, skip } from '../services/api';
+import { discover, like, me, skip } from '../services/api';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { toast } from "react-hot-toast";
+import { useAuth } from "../providers/AuthProvider";
+import Cookies from "js-cookie";
+import { ACCESS_TOKEN } from "../utils/constants";
+import { ConnectSocket } from "../services/socket";
 
 import SideNavBar from "../components/navigation/SideNavBar";
 import UserCard from "../components/people/UserCard";
 import Instructions from "../components/people/Instructions";
 
 export default function Home() {
+    const { setUser } = useAuth();
     const [people, setPeople] = useState<any[]>([]);
     const [currIdx, setCurrIdx] = useState(0);
     const [cursor, setCursor] = useState<string | null>(null);
@@ -30,6 +35,9 @@ export default function Home() {
         try {
             const result = await discover();
             setPeople(prev => [...prev, ...result.users]);
+
+            const res = await me();
+            setUser(res);
         } catch (e) {
             console.error('Failed API call: ', e);
         }

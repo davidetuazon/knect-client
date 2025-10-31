@@ -21,7 +21,6 @@ export default function Profile(props: Props) {
         try {
             const result = await getUser(id);
             setUser(result.user);
-            console.log(result);
         } catch (e) {
             console.error('Failed to fetch user data: ', e);
         }

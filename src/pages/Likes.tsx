@@ -8,7 +8,7 @@ import SideNavBar from "../components/navigation/SideNavBar";
 import Container from "../components/commons/Container";
 import Text from "../components/commons/Text";
 import UserCard from "../components/people/UserCard";
-import Instructions from "../components/people/Instructions";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
     style?: React.CSSProperties,
@@ -65,7 +65,6 @@ export default function Likes(props: Props) {
                                 color: colors.background,
                             },
                     });
-                    
                 }
             } else {
                 await skip(person._id);
