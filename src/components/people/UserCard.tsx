@@ -3,7 +3,6 @@ import colors from "../../constants/colors";
 
 import Container from "../commons/Container";
 import Text from "../commons/Text";
-import Button from "../commons/Button";
 import { Link } from "react-router-dom";
 
 type Props = {

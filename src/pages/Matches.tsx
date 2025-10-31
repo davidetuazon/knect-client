@@ -1,15 +1,33 @@
 import React, { useEffect, useState } from "react";
 import colors from "../constants/colors";
+import { motion, MotionValue, motionValue, useMotionValue, useTransform } from 'framer-motion';
 
 import SideNavBar from "../components/navigation/SideNavBar";
 import Container from "../components/commons/Container";
 import Text from "../components/commons/Text";
+import { getMatchList } from "../services/api";
+import MatchCard from "../components/people/MatchCard";
 
 type Props = {
     style?: React.CSSProperties,
 }
 
 export default function Matches(props: Props) {
+    const [matches, setMatches] = useState<any>([]);
+    const [cursor, setCursor] = useState<string | null>(null);
+
+    const init = async () => {
+        try {
+            const result = await getMatchList();
+            setMatches(result.docs);
+        } catch (e) {
+            console.error('Failed API call: ',e);
+        }
+    }
+
+    useEffect(() => {
+        init();
+    }, []);
 
     return (
         <div style={styles.root}>
@@ -19,16 +37,27 @@ export default function Matches(props: Props) {
                 </div>
                 <div style={styles.maincard}>
                     <Container style={styles.matchesCard}>
-                        <Text
-                            variant="heading"
-                        >
-                            Your recent matches will appear here.
-                        </Text>
+                        {matches.length === 0 ? (
+                            <Text variant="heading">
+                                Loading your recent matches...
+                            </Text>
+                        ) : (
+                            matches?.map((m: any, idx: number) => (
+                                <div
+                                    key={idx}
+                                    style={styles.userCard}
+                                >
+                                    <MatchCard
+                                        matches={m}
+                                    />
+                                </div>
+                            ))
+                        )}
                     </Container>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 const styles: {[key: string]: React.CSSProperties} = {
@@ -39,7 +68,7 @@ const styles: {[key: string]: React.CSSProperties} = {
         height: '100%',
         width: '100%',
         alignItems: 'center',
-        overflowY: 'auto',
+        overflow: 'hidden',
     },
     body: {
         // border: '1px solid red',
@@ -59,14 +88,23 @@ const styles: {[key: string]: React.CSSProperties} = {
         padding: '0px 20px'
     },
     maincard: {
-        border: '1px solid black',
         display: 'flex',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
+    caption: {
+        border: '1px solid red',
+        margin: 0,
+        color: colors.surface,
+    },
     matchesCard: {
         width: '80%',
         height: '80%',
+        display: 'flex',
+        overflowY: 'auto',
     },
+    userCard: {
+        cursor: 'pointer',
+    }
 }

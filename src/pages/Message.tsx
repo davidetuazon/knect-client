@@ -11,7 +11,7 @@ type Props = {
     style?: React.CSSProperties,
 }
 
-export default function Messages(props: Props) {
+export default function Message(props: Props) {
     const [messages, setMessages] = useState<any[]>();
 
     const init = async () => {

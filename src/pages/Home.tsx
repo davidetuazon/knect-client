@@ -6,7 +6,6 @@ import { toast } from "react-hot-toast";
 
 import SideNavBar from "../components/navigation/SideNavBar";
 import UserCard from "../components/people/UserCard";
-import Container from "../components/commons/Container";
 import Instructions from "../components/people/Instructions";
 
 export default function Home() {
@@ -80,7 +79,6 @@ export default function Home() {
         }
     };
 
-    
     const person = people[currIdx];
 
     useEffect(() => {

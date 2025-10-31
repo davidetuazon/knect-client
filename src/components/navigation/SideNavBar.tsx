@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import colors from "../../constants/colors";
 import profile from '../../assets/icons/profile.svg';
 
@@ -10,8 +10,19 @@ type Props = {
     style?: React.CSSProperties,
 }
 
+type PageOptions = 'messages' | 'matches' | 'likes' | 'default';
+
 export default function SideNavBar(props: Props) {
-    const [isHovered, setIsHovered] = useState<string | null>(null)
+    const [isHovered, setIsHovered] = useState<string | null>(null);
+
+    const location = useLocation();
+    const getActivePage = (): PageOptions => {
+        if (location.pathname.startsWith('/messages')) return 'messages';
+        if (location.pathname.startsWith('/matches')) return 'matches';
+        if (location.pathname.startsWith('/likes')) return 'likes';
+        return 'default';
+    }
+    const [isActive, setIsActive] = useState<PageOptions>(getActivePage());
 
     return (
         <div style={styles.sidebar}>
@@ -24,6 +35,7 @@ export default function SideNavBar(props: Props) {
                     }}
                     onMouseEnter={() => setIsHovered('appName')}
                     onMouseLeave={() => setIsHovered(null)}
+                    onClick={() => setIsActive('default')}
                 >
                     <Text
                         variant="heading"
@@ -37,11 +49,10 @@ export default function SideNavBar(props: Props) {
                         to={'/messages'}
                         style={{
                             ...styles.appName,
-                            backgroundColor: isHovered === 'messages' ? colors.surface : colors.background,
-                            border: isHovered === 'messages' ? `3px solid ${colors.primaryLight}` : `3px solid ${colors.background}`,
+                            backgroundColor: isActive === 'messages' ? colors.surface : colors.background,
+                            border: isActive === 'messages' ? `3px solid ${colors.primaryLight}` : `3px solid ${colors.background}`,
                         }}
-                        onMouseEnter={() => setIsHovered('messages')}
-                        onMouseLeave={() => setIsHovered(null)}
+                        onClick={() => setIsActive('messages')}
                     >
                         <Text
                             variant="heading"
@@ -54,11 +65,10 @@ export default function SideNavBar(props: Props) {
                         to={'/matches'}
                          style={{
                             ...styles.appName,
-                            backgroundColor: isHovered === 'matches' ? colors.surface : colors.background,
-                            border: isHovered === 'matches' ? `3px solid ${colors.primaryLight}` : `3px solid ${colors.background}`,
+                            backgroundColor: isActive === 'matches' ? colors.surface : colors.background,
+                            border: isActive === 'matches' ? `3px solid ${colors.primaryLight}` : `3px solid ${colors.background}`,
                         }}
-                        onMouseEnter={() => setIsHovered('matches')}
-                        onMouseLeave={() => setIsHovered(null)}
+                        onClick={() => setIsActive('matches')}
                     >
                         <Text
                             variant="heading"
@@ -71,11 +81,10 @@ export default function SideNavBar(props: Props) {
                         to={'/likes'}
                         style={{
                             ...styles.appName,
-                            backgroundColor: isHovered === 'likes' ? colors.surface : colors.background,
-                            border: isHovered === 'likes' ? `3px solid ${colors.primaryLight}` : `3px solid ${colors.background}`,
+                            backgroundColor: isActive === 'likes' ? colors.surface : colors.background,
+                            border: isActive === 'likes' ? `3px solid ${colors.primaryLight}` : `3px solid ${colors.background}`,
                         }}
-                        onMouseEnter={() => setIsHovered('likes')}
-                        onMouseLeave={() => setIsHovered(null)}
+                        onClick={() => setIsActive('likes')}
                     >
                         <Text
                             variant="heading"

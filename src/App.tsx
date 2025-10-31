@@ -20,6 +20,7 @@ import Messages from './pages/Messages';
 import Matches from './pages/Matches';
 import Likes from './pages/Likes';
 import Profile from './pages/Profile';
+import Message from './pages/Message';
 
 function App() {
   return (
@@ -72,6 +73,14 @@ function App() {
             element={
               <RequireAuth>
                 <Messages />
+              </RequireAuth>
+            }
+          />
+          <Route 
+            path='/messages/:id'
+            element={
+              <RequireAuth>
+                <Message />
               </RequireAuth>
             }
           />

@@ -4,13 +4,11 @@ import tapIcon from '../../assets/icons/tap-1.svg';
 import swipeLeftIcon from '../../assets/icons/swipe-left.svg'
 import swipeRightIcon from '../../assets/icons/swipe-right.svg';
 
-import Container from "../commons/Container";
 import Text from "../commons/Text";
 
 export default function Instructions() {
 
     return (
-    //   <Container style={styles.instructions}>
         <div style={styles.body}>
            <div style={styles.actions}>
              <img
@@ -61,20 +59,16 @@ export default function Instructions() {
             </Text>
            </div>
         </div>
-    //    </Container>
     )
 }
 
 const styles: {[key: string]: React.CSSProperties} = {
-    instructions: {
-        width: '70%',
-        height: '20%'
-    },
     body: {
         // border: '1px solid red',
         display: 'flex',
         justifyContent: 'center',
         width: '60%',
+        minWidth: '500px',
         border: `2px solid ${colors.border}`,
         borderRadius: '8px',
         backgroundColor: colors.surface,

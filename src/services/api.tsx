@@ -124,3 +124,21 @@ export const updatePhoto = async (formData: FormData) => {
         throw new Error('Failed to update profile photo');
     }
 }
+
+export const getMatchList = async () => {
+    try {
+        const res = await api.get('/matches');
+        return res.data;
+    } catch (e) {
+        throw new Error('Failed to fetch match list');
+    }
+}
+
+export const getLikerList = async () => {
+    try {
+        const res = await api.get('/likes');
+        return res.data;
+    } catch(e) {
+        throw new Error('Failed to fetch liker list');
+    }
+}
