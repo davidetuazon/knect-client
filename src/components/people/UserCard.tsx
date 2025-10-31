@@ -35,18 +35,29 @@ export default function UserCard(props: Props) {
                             style={styles.profileLink}
                         >
                         <Container style={styles.info}>
-                            <Text
-                                variant='heading'
-                                style={styles.name}
-                            >
-                                {firstName}, {props.person?.age}
-                            </Text>
-                            <Text
-                                variant='subtitle'
-                                style={styles.bio}
-                            >
-                                {props.person?.bio || 'No bio yet.'}  
-                            </Text>
+                            { props?.person ? (
+                                <>
+                                    <Text
+                                        variant='heading'
+                                        style={styles.name}
+                                    >
+                                        {firstName}, {props.person?.age}
+                                    </Text>
+                                    <Text
+                                        variant='subtitle'
+                                        style={styles.bio}
+                                    >
+                                        {props.person?.bio || 'No bio yet.'}  
+                                    </Text>
+                                </>
+                            ) : (
+                                <Text
+                                    variant='caption'
+                                    style={styles.name}
+                                >
+                                    Waiting on people who will send you a like...
+                                </Text>
+                            )}
                         </Container>
                     </Link>
                 </div>

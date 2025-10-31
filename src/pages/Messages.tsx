@@ -36,11 +36,18 @@ export default function Messages(props: Props) {
                     </div>
                     <div style={styles.maincard}>
                         <Container style={styles.messagesCard}>
-                            <Text
-                                variant="heading"
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flex: 1,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
                             >
-                                Working on it...
-                            </Text>
+                                <Text variant="heading">
+                                    Working on it... Keep finding people you like!
+                                </Text>
+                            </div>
                         </Container>
                     </div>
                 </div>

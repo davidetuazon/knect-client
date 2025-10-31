@@ -3,7 +3,7 @@ import { io, Socket } from "socket.io-client";
 const SOCKET_URL =
   import.meta.env.VITE_APP_URL ||
   (process.env.NODE_ENV === 'production'
-    ? window.location.origin
+    ? 'https://knect-wc-dating-app.onrender.com'
     : 'http://localhost:5000');
 
 let socket: Socket | null = null;
@@ -20,7 +20,7 @@ export const ConnectSocket = (token: string) => {
             transports: ['websocket', 'polling'],
             auth: { token },
             reconnection: true,
-            reconnectionAttempts: 10,
+            reconnectionAttempts: 20,
             reconnectionDelay: 2000,
             reconnectionDelayMax: 5000,
         });

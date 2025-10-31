@@ -38,9 +38,18 @@ export default function Matches(props: Props) {
                 <div style={styles.maincard}>
                     <Container style={styles.matchesCard}>
                         {matches.length === 0 ? (
-                            <Text variant="heading">
-                                Loading your recent matches...
-                            </Text>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flex: 1,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Text variant="heading">
+                                    Working on your potential matches... Hang tight!
+                                </Text>
+                            </div>
                         ) : (
                             matches?.map((m: any, idx: number) => (
                                 <div
